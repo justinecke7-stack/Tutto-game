@@ -4,6 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Tutto Karten</title>
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#a12020" />
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Roboto+Slab&family=Press+Start+2P&display=swap');
 
@@ -12,16 +14,10 @@
     font-family: 'Roboto Slab', serif;
     display:flex; flex-direction: column; align-items: center; justify-content: center;
     user-select:none;
-    -webkit-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
     transition: background-color 1.5s ease;
   }
 
-  #game {
-    text-align: center;
-    user-select:none;
-  }
+  #game { text-align: center; user-select:none; }
   .card {
     width: 160px; height: 240px;
     border-radius: 16px;
@@ -30,10 +26,6 @@
     margin: 20px auto;
     cursor: pointer;
     perspective: 1000px;
-    transition: box-shadow 0.3s ease;
-  }
-  .card:hover {
-    box-shadow: 0 12px 28px rgba(0,0,0,0.3);
   }
   .inner-card {
     width: 100%; height: 100%;
@@ -44,9 +36,7 @@
     transition: transform 0.8s cubic-bezier(0.4,0,0.2,1);
     box-shadow: inset 0 0 40px rgba(0,0,0,0.05);
   }
-  .inner-card.flipped {
-    transform: rotateY(180deg);
-  }
+  .inner-card.flipped { transform: rotateY(180deg); }
   .face {
     position: absolute;
     width: 100%; height: 100%;
@@ -57,197 +47,153 @@
     padding: 14px 18px;
     box-sizing: border-box;
   }
-  .front {
-  }
   .back {
-    background: #333;
-    color: #eee;
+    background: #333; color: #eee;
     font-family: 'Press Start 2P', cursive;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 28px;
-    user-select:none;
-    transform: rotateY(180deg);
+    display: flex; justify-content: center; align-items: center;
+    font-size: 28px; transform: rotateY(180deg);
   }
   .index-top-left, .index-bottom-right {
-    font-weight: bold;
-    font-size: 20px;
-    user-select:none;
+    font-weight: bold; font-size: 20px; user-select:none;
   }
-  .index-bottom-right {
-    transform: rotate(180deg);
-    align-self: flex-end;
-  }
+  .index-bottom-right { transform: rotate(180deg); align-self: flex-end; }
   .center-symbol {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 72px;
-    opacity: 0.85;
-    user-select:none;
+    flex-grow: 1; display: flex; justify-content: center; align-items: center;
+    font-size: 72px; opacity: 0.85; user-select:none;
   }
-
   #restartBtn {
-    background: #222;
-    color: #eee;
-    border: none;
-    border-radius: 14px;
-    padding: 14px 28px;
-    font-size: 18px;
-    margin-top: 20px;
-    cursor: pointer;
-    font-family: 'Press Start 2P', cursive;
-    letter-spacing: 2px;
-    transition: background-color 0.3s ease;
+    background: #222; color: #eee; border: none;
+    border-radius: 14px; padding: 14px 28px; font-size: 18px;
+    margin-top: 20px; cursor: pointer;
+    font-family: 'Press Start 2P', cursive; letter-spacing: 2px;
   }
-  #restartBtn:hover {
-    background: #444;
-  }
+  #restartBtn:hover { background: #444; }
 
-  /* DESIGN STYLES */
-
-  /* Pastell (Design 0) */
-  .design-0 body {
-    background-color: #fff5f5;
-  }
+  /* Designs */
+  .design-0 body { background-color: #fff5f5; }
   .design-0 .card .front {
-    background: #ffd9d9;
-    color: #a12020;
-    box-shadow: 0 4px 12px #eebbbb;
+    background: #ffd9d9; color: #a12020; box-shadow: 0 4px 12px #eebbbb;
   }
-
-  /* Comic (Design 1) */
   .design-1 body {
     background: linear-gradient(135deg, #f0f8ff 0%, #b3d1ff 100%);
   }
   .design-1 .card .front {
-    background: #fff;
-    border: 6px solid #ff3f3f;
-    color: #ff3f3f;
+    background: #fff; border: 6px solid #ff3f3f; color: #ff3f3f;
     font-family: 'Comic Neue', cursive;
-    text-shadow: 2px 2px #ffcccb;
-    box-shadow: 0 6px 10px #ff9a9a;
   }
-
-  /* Retro (Design 2) */
-  .design-2 body {
-    background: #282c34;
-  }
+  .design-2 body { background: #282c34; }
   .design-2 .card .front {
-    background: #ffe600;
-    color: #2c2c2c;
-    font-family: 'Press Start 2P', cursive;
-    border: 4px dashed #2c2c2c;
-    box-shadow: 0 0 12px #ffd500 inset;
+    background: #ffe600; color: #2c2c2c;
+    font-family: 'Press Start 2P', cursive; border: 4px dashed #2c2c2c;
   }
-
-  /* Modern (Design 3) */
-  .design-3 body {
-    background: #f0f0f0;
-  }
+  .design-3 body { background: #f0f0f0; }
   .design-3 .card .front {
     background: linear-gradient(135deg, #dff3f8, #a0c8e2);
-    color: #003366;
-    font-family: 'Roboto Slab', serif;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    color: #003366; font-family: 'Roboto Slab', serif;
   }
-
 </style>
 </head>
 <body class="design-0">
   <div id="game">
-    <div class="card" id="card" aria-label="Tutto Karte, klicken zum Ziehen">
+    <div class="card" id="card">
       <div class="inner-card" id="innerCard">
         <div class="face front" id="cardFront">
-          <div class="index-top-left" id="indexTop">+</div>
-          <div class="center-symbol" id="centerSymbol">+</div>
-          <div class="index-bottom-right" id="indexBottom">+</div>
+          <div class="index-top-left" id="indexTop"></div>
+          <div class="center-symbol" id="centerSymbol"></div>
+          <div class="index-bottom-right" id="indexBottom"></div>
         </div>
-        <div class="face back" id="cardBack">Tutto</div>
+        <div class="face back">Tutto</div>
       </div>
     </div>
-    <button id="restartBtn" aria-label="Neustart Spiel">Neustart</button>
+    <button id="restartBtn">Neustart</button>
   </div>
 
 <script>
-  const cards = [
-    {text: '+1000', symbol: '➕', index: '+1000'},
-    {text: '-1000', symbol: '➖', index: '-1000'},
-    {text: '+2000', symbol: '🏙️', index: '+2000'},
-    {text: '-2000', symbol: '🏙️', index: '-2000'},
-    {text: 'Bonus', symbol: '⭐', index: '⭐'},
-    {text: 'Bonus', symbol: '✨', index: '✨'},
-    {text: 'Bonus', symbol: '🎉', index: '🎉'},
+  // Kartenverteilung nach Tutto (56 Karten)
+  const cardPool = [
+    {text: "Bonus 200", symbol: "🎲", count: 4},
+    {text: "Bonus 300", symbol: "🎲", count: 4},
+    {text: "Bonus 400", symbol: "🎲", count: 4},
+    {text: "Bonus 500", symbol: "🎲", count: 4},
+    {text: "Bonus 600", symbol: "🎲", count: 4},
+    {text: "x2", symbol: "✖️", count: 5},
+    {text: "Stop", symbol: "⛔", count: 10},
+    {text: "Feuerwerk", symbol: "🎆", count: 5},
+    {text: "Straße 2000", symbol: "➡️", count: 5},
+    {text: "Plus/Minus 1000", symbol: "➕➖", count: 5},
+    {text: "Kleeblatt", symbol: "☘️", count: 1}
   ];
 
-  const designsCount = 4;
+  let deck = [];
   let currentDesign = 0;
-  const body = document.body;
-  const innerCard = document.getElementById('innerCard');
-  const indexTop = document.getElementById('indexTop');
-  const indexBottom = document.getElementById('indexBottom');
-  const centerSymbol = document.getElementById('centerSymbol');
-  const restartBtn = document.getElementById('restartBtn');
-
-  let flipped = false;
   let currentCardIndex = -1;
+  let flipped = false;
+
+  function buildDeck() {
+    deck = [];
+    cardPool.forEach(c => {
+      for (let i = 0; i < c.count; i++) {
+        deck.push({text: c.text, symbol: c.symbol});
+      }
+    });
+    deck.sort(() => Math.random() - 0.5);
+  }
 
   function drawCard() {
+    if (deck.length === 0) buildDeck();
+    const card = deck.pop();
+    const indexTop = document.getElementById('indexTop');
+    const indexBottom = document.getElementById('indexBottom');
+    const centerSymbol = document.getElementById('centerSymbol');
+    indexTop.textContent = card.text;
+    indexBottom.textContent = card.text;
+    centerSymbol.textContent = card.symbol;
+  }
+
+  function flipCard() {
+    const innerCard = document.getElementById('innerCard');
     if (flipped) {
       innerCard.classList.remove('flipped');
       flipped = false;
       setTimeout(() => {
-        setCard();
+        drawCard();
         innerCard.classList.add('flipped');
         flipped = true;
       }, 300);
     } else {
-      setCard();
+      drawCard();
       innerCard.classList.add('flipped');
       flipped = true;
     }
   }
 
-  function setCard() {
-    let newIndex;
-    do {
-      newIndex = Math.floor(Math.random() * cards.length);
-    } while (newIndex === currentCardIndex);
-    currentCardIndex = newIndex;
-
-    const cardData = cards[newIndex];
-    indexTop.textContent = cardData.index;
-    indexBottom.textContent = cardData.index;
-    centerSymbol.textContent = cardData.symbol;
-  }
-
   function nextDesign() {
-    currentDesign = (currentDesign + 1) % designsCount;
-    body.className = 'design-' + currentDesign;
+    currentDesign = (currentDesign + 1) % 4;
+    document.body.className = 'design-' + currentDesign;
   }
 
   function restartGame() {
-    currentDesign = 0;
-    body.className = 'design-0';
-    currentCardIndex = -1;
+    buildDeck();
+    nextDesign();
     flipped = false;
-    innerCard.classList.remove('flipped');
+    document.getElementById('innerCard').classList.remove('flipped');
     setTimeout(() => {
-      drawCard();
+      flipCard();
     }, 200);
   }
 
-  restartBtn.addEventListener('click', (e) => {
+  document.getElementById('game').addEventListener('click', () => {
+    flipCard();
+  });
+
+  document.getElementById('restartBtn').addEventListener('click', (e) => {
     e.stopPropagation();
     restartGame();
   });
 
-  document.getElementById('game').addEventListener('click', () => {
-    drawCard();
-    nextDesign();
-  });
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
 
   restartGame();
 </script>
