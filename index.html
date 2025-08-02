@@ -151,21 +151,24 @@
   }
 
   function flipCard() {
-    const innerCard = document.getElementById('innerCard');
-    if (flipped) {
-      innerCard.classList.remove('flipped');
-      flipped = false;
-      setTimeout(() => {
-        drawCard();
-        innerCard.classList.add('flipped');
-        flipped = true;
-      }, 300);
-    } else {
+  const innerCard = document.getElementById('innerCard');
+
+  // Wenn Karte noch nicht umgedreht → Karte ziehen & umdrehen
+  if (!flipped) {
+    drawCard();
+    innerCard.classList.add('flipped');
+    flipped = true;
+  } else {
+    // Wenn Karte schon umgedreht → erst zurück, dann neue ziehen
+    innerCard.classList.remove('flipped');
+    flipped = false;
+    setTimeout(() => {
       drawCard();
       innerCard.classList.add('flipped');
       flipped = true;
-    }
+    }, 300); // kleine Pause für Flip-Animation
   }
+}
 
   function nextDesign() {
     currentDesign = (currentDesign + 1) % 4;
