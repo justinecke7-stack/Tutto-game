@@ -109,7 +109,6 @@
   </div>
 
 <script>
-  // Kartenverteilung nach Tutto (56 Karten)
   const cardPool = [
     {text: "Bonus 200", symbol: "🎲", count: 4},
     {text: "Bonus 300", symbol: "🎲", count: 4},
@@ -126,7 +125,6 @@
 
   let deck = [];
   let currentDesign = 0;
-  let currentCardIndex = -1;
   let flipped = false;
 
   function buildDeck() {
@@ -142,33 +140,27 @@
   function drawCard() {
     if (deck.length === 0) buildDeck();
     const card = deck.pop();
-    const indexTop = document.getElementById('indexTop');
-    const indexBottom = document.getElementById('indexBottom');
-    const centerSymbol = document.getElementById('centerSymbol');
-    indexTop.textContent = card.text;
-    indexBottom.textContent = card.text;
-    centerSymbol.textContent = card.symbol;
+    document.getElementById('indexTop').textContent = card.text;
+    document.getElementById('indexBottom').textContent = card.text;
+    document.getElementById('centerSymbol').textContent = card.symbol;
   }
 
   function flipCard() {
-  const innerCard = document.getElementById('innerCard');
-
-  // Wenn Karte noch nicht umgedreht → Karte ziehen & umdrehen
-  if (!flipped) {
-    drawCard();
-    innerCard.classList.add('flipped');
-    flipped = true;
-  } else {
-    // Wenn Karte schon umgedreht → erst zurück, dann neue ziehen
-    innerCard.classList.remove('flipped');
-    flipped = false;
-    setTimeout(() => {
+    const innerCard = document.getElementById('innerCard');
+    if (!flipped) {
       drawCard();
       innerCard.classList.add('flipped');
       flipped = true;
-    }, 300); // kleine Pause für Flip-Animation
+    } else {
+      innerCard.classList.remove('flipped');
+      flipped = false;
+      setTimeout(() => {
+        drawCard();
+        innerCard.classList.add('flipped');
+        flipped = true;
+      }, 300);
+    }
   }
-}
 
   function nextDesign() {
     currentDesign = (currentDesign + 1) % 4;
