@@ -48,10 +48,9 @@
     box-sizing: border-box;
   }
   .back {
-    background: #333; color: #eee;
     font-family: 'Press Start 2P', cursive;
-    display: flex; justify-content: center; align-items: center;
     font-size: 28px; transform: rotateY(180deg);
+    display: flex; justify-content: center; align-items: center;
   }
   .index-top-left, .index-bottom-right {
     font-weight: bold; font-size: 20px; user-select:none;
@@ -62,12 +61,11 @@
     font-size: 72px; opacity: 0.85; user-select:none;
   }
   #restartBtn {
-    background: #222; color: #eee; border: none;
+    border: none;
     border-radius: 14px; padding: 14px 28px; font-size: 18px;
     margin-top: 20px; cursor: pointer;
-    font-family: 'Press Start 2P', cursive; letter-spacing: 2px;
+    letter-spacing: 2px;
   }
-  #restartBtn:hover { background: #444; }
 
   /* Designs */
   .design-0 body { background-color: #fff5f5; }
@@ -91,6 +89,20 @@
     background: linear-gradient(135deg, #dff3f8, #a0c8e2);
     color: #003366; font-family: 'Roboto Slab', serif;
   }
+
+  /* Rückseiten */
+  .back.design-0 { background: #333; color: #ffd9d9; font-family: 'Press Start 2P', cursive; }
+  .back.design-1 { background: #ff3f3f; color: #fff; font-family: 'Comic Neue', cursive; }
+  .back.design-2 { background: #2c2c2c; color: #ffe600; font-family: 'Press Start 2P', cursive; }
+  .back.design-3 { background: #003366; color: #a0c8e2; font-family: 'Roboto Slab', serif; }
+
+  /* Restart-Button Styles */
+  #restartBtn.design-0 { background: #a12020; color: #fff; font-family: 'Press Start 2P', cursive; }
+  #restartBtn.design-1 { background: #ff3f3f; color: #fff; font-family: 'Comic Neue', cursive; }
+  #restartBtn.design-2 { background: #ffe600; color: #2c2c2c; font-family: 'Press Start 2P', cursive; }
+  #restartBtn.design-3 { background: #003366; color: #fff; font-family: 'Roboto Slab', serif; }
+
+  #restartBtn:hover { opacity: 0.85; }
 </style>
 </head>
 <body class="design-0">
@@ -102,10 +114,10 @@
           <div class="center-symbol" id="centerSymbol"></div>
           <div class="index-bottom-right" id="indexBottom"></div>
         </div>
-        <div class="face back">Tutto</div>
+        <div class="face back design-0">Tutto</div>
       </div>
     </div>
-    <button id="restartBtn">Neustart</button>
+    <button id="restartBtn" class="design-0">Neustart</button>
   </div>
 
 <script>
@@ -165,6 +177,14 @@
   function nextDesign() {
     currentDesign = (currentDesign + 1) % 4;
     document.body.className = 'design-' + currentDesign;
+
+    // Rückseite anpassen
+    const backFace = document.querySelector('.back');
+    backFace.className = 'face back design-' + currentDesign;
+
+    // Restart-Button anpassen
+    const restartBtn = document.getElementById('restartBtn');
+    restartBtn.className = 'design-' + currentDesign;
   }
 
   function restartGame() {
